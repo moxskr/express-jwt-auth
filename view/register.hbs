@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Register</title>
+</head>
+<body>
+
+<p>Register</p>
+<form name="registerForm">
+    <input type="text" name="login" placeholder="Login">
+    <input type="email" name="email" placeholder="Email">
+    <input type="password" name="password" placeholder="Password">
+    <input type="password" name="passwordConfirm" placeholder="Confirm password">
+    <input type="submit" id="submit_register">
+</form>
+
+<script>
+    document.getElementById("submit_register").addEventListener("click", (e) => {
+        e.preventDefault();
+        let registerForm = document.forms["registerForm"];
+        let login = registerForm.elements["login"].value;
+        let password = registerForm.elements["password"].value;
+        let email = registerForm.elements["email"].value;
+        let passwordConfirm = registerForm.elements["passwordConfirm"].value;
+
+        let user = {
+            login, email, password, passwordConfirm
+        };
+
+        let userJson = JSON.stringify(user);
+
+        let req = new XMLHttpRequest();
+        req.open("POST", "http://localhost:5000/api/register", true);
+        req.setRequestHeader("Content-Type", "application/json");
+        req.addEventListener("load", () => {
+            let { success }  = JSON.parse(req.response);
+            success ? window.location = "/" : window.location = "/register"
+        });
+        req.send(userJson);
+    });
+</script>
+
+</body>
+</html>

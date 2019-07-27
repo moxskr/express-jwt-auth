@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login</title>
+</head>
+<body>
+
+<p>Login</p>
+<form name="loginForm">
+    <input type="text" placeholder="Login" name="login">
+    <input type="password" placeholder="Password" name="password">
+    <input type="submit" id="submit_login">
+</form>
+
+<script>
+    document.getElementById("submit_login").addEventListener("click", (e) => {
+        e.preventDefault();
+        let loginForm = document.forms["loginForm"];
+        let login = loginForm.elements["login"].value;
+        let password = loginForm.elements["password"].value;
+
+        let user = {
+            login, password
+        };
+
+        let userJson = JSON.stringify(user);
+
+        let req = new XMLHttpRequest();
+        req.open("POST", "http://localhost:5000/api/login", true);
+        req.setRequestHeader("Content-Type", "application/json");
+        req.addEventListener("load", () => {
+            let { success }  = JSON.parse(req.response);
+            success ? window.location = "/" : window.location = "/login"
+        });
+        req.send(userJson);
+    });
+</script>
+
+</body>
+</html>

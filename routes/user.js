@@ -42,7 +42,7 @@ router.post("/register", (req, res) => {
                                 newUser.password = hash;
                                 newUser.save().then(() => res.status(200).json({
                                     success : true
-                                }))
+                                }));
                             }
                         })
                     }
@@ -82,7 +82,7 @@ router.post('/login', (req, res) => {
                                     let cookies = new Cookie(req, res);
                                     cookies.set('token', `Bearer ${token}`);
                                     res.status(200).json({
-                                        success : true,
+                                        success : true
                                     })
                                 }
                             })
